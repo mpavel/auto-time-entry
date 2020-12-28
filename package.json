@@ -1,0 +1,26 @@
+{
+  "name": "auto-time-entry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "author": "Pavel Mocan",
+  "license": "ISC",
+  "dependencies": {
+    "neat-csv": "^6.0.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.0",
+    "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.16",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^4.1.3"
+  }
+}
