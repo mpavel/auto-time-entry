@@ -1,2 +1,3 @@
 node_modules
 time-entries/*
+!time-entries/.gitkeep

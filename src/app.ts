@@ -2,6 +2,7 @@ const csv = require('neat-csv');
 const fs = require('fs');
 
 import { extractRelevantColumns, groupRowsByDay, removeLunchBreakDuration } from "./services";
+import type { TimeEntry } from "./types";
 
 const loadCsv = async (filePath: string): Promise<Array<any> | undefined> => {
     try {
@@ -12,6 +13,14 @@ const loadCsv = async (filePath: string): Promise<Array<any> | undefined> => {
         console.log('Error:', e.message);
     }
 };
+
+const createStepsForSAP = (workHours: TimeEntry[]) => {
+    console.log('Steps for SAP is work in progress ...');
+}
+
+const createStepsForApollo = (workHours: TimeEntry[]) => {
+    console.log('Steps for Apollo is work in progress ...');
+}
 
 
 (async () => {
@@ -26,5 +35,8 @@ const loadCsv = async (filePath: string): Promise<Array<any> | undefined> => {
 
     const workHours = removeLunchBreakDuration(dayEntries);
 
-    console.log(workHours);
+    createStepsForSAP(workHours);
+    createStepsForApollo(workHours);
+
+    console.log('Complete');
 })();
