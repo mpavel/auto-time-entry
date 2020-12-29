@@ -1,4 +1,4 @@
-import { extractRelevantColumns, getBreakDurationInMs, groupRowsByDay, convertHourStringToMs, newEndHourBasedOnBreakDuration, removeLunchBreakDuration, hasTimeEntry, updateTimeEntries } from "../services";
+import { extractRelevantColumns, getBreakDurationInMs, groupRowsByDay, convertHourStringToMs, newEndHourBasedOnBreakDuration, removeLunchBreakDuration, hasTimeEntry, updateTimeEntries, convertDecimalTimeToHourString } from "../services";
 import { TimeEntry } from "../types";
 
 const CSV_ROW = {
@@ -266,4 +266,10 @@ describe('auto-time-entry', () => {
             expect(convertHourStringToMs('10:00')).toBe(36000000); // 36.000.000
         });
     });
+
+    describe('#convertDecimalTimeToHourString()', () => {
+        it('converts time written in decimal format to an hour string', () => {
+            expect(convertDecimalTimeToHourString(7.66)).toBe('07:39');
+        });
+    })
 });

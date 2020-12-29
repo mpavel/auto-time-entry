@@ -1,8 +1,10 @@
 const csv = require('neat-csv');
 const fs = require('fs');
 
+import { writeFile } from "fs";
+import { createMacroForApollo } from "./apollo";
 import { extractRelevantColumns, groupRowsByDay, removeLunchBreakDuration } from "./services";
-import type { TimeEntry } from "./types";
+import type { Command, Macro, TimeEntry } from "./types";
 
 const loadCsv = async (filePath: string): Promise<Array<any> | undefined> => {
     try {
@@ -14,12 +16,17 @@ const loadCsv = async (filePath: string): Promise<Array<any> | undefined> => {
     }
 };
 
-const createStepsForSAP = (workHours: TimeEntry[]) => {
-    console.log('Steps for SAP is work in progress ...');
+const saveMacro = (destination: string, macro: Macro) => {
+    fs.writeFile(`./macros/${destination}.json`, JSON.stringify(macro), 'UTF-8', (error: any) => {
+        if (error) {
+            return console.log(error.message);
+        }
+        console.log(`Successfully written macro to ./macros/${destination}.json`)
+    });
 }
 
-const createStepsForApollo = (workHours: TimeEntry[]) => {
-    console.log('Steps for Apollo is work in progress ...');
+const createMacroForSAP = (timeEntries: TimeEntry[]) => {
+    console.log('Steps for SAP is work in progress ...');
 }
 
 
@@ -33,13 +40,12 @@ const createStepsForApollo = (workHours: TimeEntry[]) => {
     const relevantColumns = extractRelevantColumns(csvRows);
     const dayEntries = groupRowsByDay(relevantColumns);
 
-    const workHours = removeLunchBreakDuration(dayEntries);
+    const timeEntries = removeLunchBreakDuration(dayEntries);
 
-    createStepsForSAP(workHours);
-    createStepsForApollo(workHours);
+    createMacroForSAP(timeEntries);
+    const apolloMacro = createMacroForApollo(timeEntries);
 
-    console.log('Complete');
+    saveMacro('apollo', apolloMacro);
 
-    console.log(workHours);
-    
+    console.log('Complete');    
 })();

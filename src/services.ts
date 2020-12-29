@@ -82,7 +82,7 @@ export const newEndHourBasedOnBreakDuration = (timeEntry: TimeEntry, standardLun
 
     const utcMinutes = newEndDate.getUTCMinutes();
     const formattedMinutes = utcMinutes < 10 ? `0${utcMinutes}` : utcMinutes;
-    
+
     return `${formattedHours}:${formattedMinutes}`;
 }
 
@@ -95,3 +95,13 @@ export const removeLunchBreakDuration = (timeEntries: TimeEntry[]): TimeEntry[] 
             end: newEndHour,
         };
     });
+
+export const convertDecimalTimeToHourString = (decimalTime: number): string => {
+    const timeInMs = decimalTime * 1000 * 60 * 60;
+
+    const date = new Date(timeInMs);
+    const hours = Number(date.getUTCHours()) < 10 ? `0${date.getUTCHours()}` : date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+
+    return `${hours}:${minutes}`;
+};

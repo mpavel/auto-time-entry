@@ -1,3 +1,9 @@
 node_modules
 time-entries/*
 !time-entries/.gitkeep
+macros/*
+!macros/.gitkeep
+.DS_Store
+.idea
+.vs_code
+temp.txt
