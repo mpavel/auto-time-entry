@@ -16,7 +16,7 @@ export const extractRelevantColumns = (csvRows: any[]): TimeEntry[] =>
         }
     });
 
-export const timeEntryExists = (timeEntry: TimeEntry, entries: TimeEntry[]): boolean => {
+export const hasTimeEntry = (timeEntry: TimeEntry, entries: TimeEntry[]): boolean => {
     return !!entries.find((entry: TimeEntry) => entry.date === timeEntry.date)
 };
 
@@ -37,7 +37,7 @@ export const groupRowsByDay = (timeEntries: TimeEntry[]): TimeEntry[] => {
     let groupedTimeEntries: TimeEntry[] = [];
 
     for (const entry of timeEntries) {
-        if (timeEntryExists(entry, groupedTimeEntries)) {
+        if (hasTimeEntry(entry, groupedTimeEntries)) {
             groupedTimeEntries = updateTimeEntries(entry, groupedTimeEntries);
         } else {
             groupedTimeEntries.push(entry);
@@ -47,7 +47,7 @@ export const groupRowsByDay = (timeEntries: TimeEntry[]): TimeEntry[] => {
     return groupedTimeEntries;
 }
 
-export const hourStringInMs = (hour: string): number => {
+export const convertHourStringToMs = (hour: string): number => {
     const [hourValue, minuteValue] = hour.split(':');
 
     return (Number(hourValue) * 60 * 60 * 1000) +
@@ -55,8 +55,8 @@ export const hourStringInMs = (hour: string): number => {
 }
 
 export const getBreakDurationInMs = (timeEntry: TimeEntry) => {
-    const startInMs = hourStringInMs(timeEntry.start);
-    const endInMs = hourStringInMs(timeEntry.end);
+    const startInMs = convertHourStringToMs(timeEntry.start);
+    const endInMs = convertHourStringToMs(timeEntry.end);
     const startEndIntervalInMs = endInMs - startInMs;
 
     return startEndIntervalInMs - (timeEntry.hours * 60 * 60 * 1000);
@@ -69,7 +69,7 @@ export const newEndHourBasedOnBreakDuration = (timeEntry: TimeEntry, standardLun
         return timeEntry.end;
     }
 
-    const endTimeInMs = hourStringInMs(timeEntry.end);
+    const endTimeInMs = convertHourStringToMs(timeEntry.end);
 
     // deduct the total break duration, but account for the allowed standard lunch break
     const newEndTimeInMs = endTimeInMs - breakDurationInMs + standardLunchBreakInMs;

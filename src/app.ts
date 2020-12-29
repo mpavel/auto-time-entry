@@ -39,4 +39,7 @@ const createStepsForApollo = (workHours: TimeEntry[]) => {
     createStepsForApollo(workHours);
 
     console.log('Complete');
+
+    console.log(workHours);
+    
 })();

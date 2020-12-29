@@ -1,7 +1,7 @@
-import { extractRelevantColumns, getBreakDurationInMs, groupRowsByDay, hourStringInMs, newEndHourBasedOnBreakDuration, removeLunchBreakDuration, timeEntryExists, updateTimeEntries } from "../services";
+import { extractRelevantColumns, getBreakDurationInMs, groupRowsByDay, convertHourStringToMs, newEndHourBasedOnBreakDuration, removeLunchBreakDuration, hasTimeEntry, updateTimeEntries } from "../services";
 import { TimeEntry } from "../types";
 
-const ROW = {
+const CSV_ROW = {
     Date: '2020-12-03',
     Client: 'Me',
     Project: 'Work',
@@ -28,7 +28,7 @@ const ROW = {
 describe('auto-time-entry', () => {
     describe('#extractRelevantColumns()', () => {
         it('extracts only the relevant columns', () => {
-            expect(extractRelevantColumns([ROW])).toEqual([{
+            expect(extractRelevantColumns([CSV_ROW])).toEqual([{
                 "date": "2020-12-03",
                 "end": "17:00",
                 "hours": 7.5,
@@ -117,12 +117,12 @@ describe('auto-time-entry', () => {
         });
     });
 
-    describe('#timeEntryDoesNotExist()', () => {
-        it('returns false if the time entry does not exist', () => {
-            expect(timeEntryExists({ date: '2020-12-12' } as TimeEntry, [{ date: '2020-12-12' } as TimeEntry])).toBe(true);
+    describe('#hasTimeEntry()', () => {
+        it('returns true if the time entry exists', () => {
+            expect(hasTimeEntry({ date: '2020-12-12' } as TimeEntry, [{ date: '2020-12-12' } as TimeEntry])).toBe(true);
         });
-        it('returns true when time entry exists', () => {
-            expect(timeEntryExists({ date: '2020-12-12' } as TimeEntry, [])).toBe(false);
+        it('returns false when the time entry does not exist', () => {
+            expect(hasTimeEntry({ date: '2020-12-12' } as TimeEntry, [])).toBe(false);
         });
     });
 
@@ -153,11 +153,11 @@ describe('auto-time-entry', () => {
         });
 
         it.skip('keeps the latest end time when updating a time entry', () => {
-            // assuming newer time entries build on top of existing ones
+            // assuming time entries are set in the CSV file in chronological order
         });
 
         it.skip('keeps the earliest start time when updating a time entry', () => {
-            // assuming newer time entries build on top of existing ones
+            // assuming time entries are set in the CSV file in chronological order
         });
     });
 
@@ -261,9 +261,9 @@ describe('auto-time-entry', () => {
         });
     });
 
-    describe('#hourStringInMs()', () => {
+    describe('#convertHourStringToMs()', () => {
         it('returns the hour string in miliseconds', () => {
-            expect(hourStringInMs('10:00')).toBe(36000000); // 36.000.000
+            expect(convertHourStringToMs('10:00')).toBe(36000000); // 36.000.000
         });
     });
 });
