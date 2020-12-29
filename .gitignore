@@ -7,3 +7,4 @@ macros/*
 .idea
 .vs_code
 temp.txt
+coverage

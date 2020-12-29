@@ -1,4 +1,4 @@
-import { extractRelevantColumns, getBreakDurationInMs, groupRowsByDay, convertHourStringToMs, newEndHourBasedOnBreakDuration, removeLunchBreakDuration, hasTimeEntry, updateTimeEntries, convertDecimalTimeToHourString } from "../services";
+import { extractRelevantColumns, getBreakDurationInMs, groupRowsByDay, convertHourStringToMs, newEndHourBasedOnBreakDuration, removeLunchBreakDuration, hasTimeEntry, updateTimeEntries, convertDecimalTimeToHourString, formatHourStringFromNumbers } from "../services";
 import { TimeEntry } from "../types";
 
 const CSV_ROW = {
@@ -39,7 +39,7 @@ describe('auto-time-entry', () => {
     });
 
     describe('#groupRowsByDay()', () => {
-        it('groups multiple days into one entry', () => {
+        it('groups multiple entries for the same day into one single entry', () => {
             const rows: TimeEntry[] = [
                 {
                     date: '2020-12-03',
@@ -162,7 +162,7 @@ describe('auto-time-entry', () => {
     });
 
     describe('#removeLunchBreakDuration()', () => {
-        it('removes the lunch break duration when lunch break is exactly 0,5 hours', () => {
+        it('does not do anything when lunch break is exactly 0,5 hours', () => {
             expect(removeLunchBreakDuration([{
                 date: '2020-12-12',
                 project: 'PROJECT',
@@ -248,7 +248,7 @@ describe('auto-time-entry', () => {
             const timeEntry: TimeEntry = {
                 hours: 8.0, // actual work hours are 8
                 start: '00:30',
-                end: '09:45', 
+                end: '09:45',
                 // total time spent is 9:15
                 // total break time is 1:15
                 // allowed break is 00:30 
@@ -271,5 +271,15 @@ describe('auto-time-entry', () => {
         it('converts time written in decimal format to an hour string', () => {
             expect(convertDecimalTimeToHourString(7.66)).toBe('07:39');
         });
-    })
+    });
+
+    describe('#formatHourStringFromNumbers()', () => {
+        it('returns formatted hour string for 2 digits hours and minutes', () => {
+            expect(formatHourStringFromNumbers(12, 15)).toBe('12:15');
+        });
+
+        it('prepends 0 for hours and minutes', () => {
+            expect(formatHourStringFromNumbers(9, 9)).toBe('09:09');
+        });
+    });
 });

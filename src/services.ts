@@ -62,6 +62,13 @@ export const getBreakDurationInMs = (timeEntry: TimeEntry) => {
     return startEndIntervalInMs - (timeEntry.hours * 60 * 60 * 1000);
 }
 
+export const formatHourStringFromNumbers = (hours: number, minutes: number): string => {
+    const formattedHours = hours < 10 ? `0${hours}` : hours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${formattedHours}:${formattedMinutes}`;
+};
+
 export const newEndHourBasedOnBreakDuration = (timeEntry: TimeEntry, standardLunchBreakInMs: number) => {
     const breakDurationInMs = getBreakDurationInMs(timeEntry);
 
@@ -77,13 +84,7 @@ export const newEndHourBasedOnBreakDuration = (timeEntry: TimeEntry, standardLun
     const newEndDate = new Date(0);
     newEndDate.setUTCMilliseconds(newEndTimeInMs);
 
-    const utcHours = newEndDate.getUTCHours();
-    const formattedHours = utcHours < 10 ? `0${utcHours}` : utcHours;
-
-    const utcMinutes = newEndDate.getUTCMinutes();
-    const formattedMinutes = utcMinutes < 10 ? `0${utcMinutes}` : utcMinutes;
-
-    return `${formattedHours}:${formattedMinutes}`;
+    return formatHourStringFromNumbers(newEndDate.getUTCHours(), newEndDate.getUTCMinutes());
 }
 
 export const removeLunchBreakDuration = (timeEntries: TimeEntry[]): TimeEntry[] =>
@@ -100,8 +101,6 @@ export const convertDecimalTimeToHourString = (decimalTime: number): string => {
     const timeInMs = decimalTime * 1000 * 60 * 60;
 
     const date = new Date(timeInMs);
-    const hours = Number(date.getUTCHours()) < 10 ? `0${date.getUTCHours()}` : date.getUTCHours();
-    const minutes = date.getUTCMinutes();
 
-    return `${hours}:${minutes}`;
+    return formatHourStringFromNumbers(date.getUTCHours(), date.getUTCMinutes());
 };
