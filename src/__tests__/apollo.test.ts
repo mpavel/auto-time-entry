@@ -1,7 +1,7 @@
 import { getDayEffortCommands } from "../apollo";
 import { TimeEntry } from "../types";
 
-describe('Apollo Commands', () => {
+describe('Apollo Macro', () => {
     describe('#getDayEffortCommands()', () => {
         it('returns the commands for a day work efforts in Apollo', () => {
             const timeEntry: TimeEntry = {

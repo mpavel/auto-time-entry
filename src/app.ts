@@ -1,10 +1,10 @@
 const csv = require('neat-csv');
 const fs = require('fs');
 
-import { writeFile } from "fs";
 import { createMacroForApollo } from "./apollo";
 import { extractRelevantColumns, groupRowsByDay, removeLunchBreakDuration } from "./services";
-import type { Command, Macro, TimeEntry } from "./types";
+import { createMacroForSPortal } from "./sportal";
+import type { Macro } from "./types";
 
 const loadCsv = async (filePath: string): Promise<Array<any> | undefined> => {
     try {
@@ -25,11 +25,6 @@ const saveMacro = (destination: string, macro: Macro) => {
     });
 }
 
-const createMacroForSAP = (timeEntries: TimeEntry[]) => {
-    console.log('Steps for SAP is work in progress ...');
-}
-
-
 (async () => {
     const csvRows = await loadCsv('./time-entries/2020-12.csv');
 
@@ -42,10 +37,8 @@ const createMacroForSAP = (timeEntries: TimeEntry[]) => {
 
     const timeEntries = removeLunchBreakDuration(dayEntries);
 
-    createMacroForSAP(timeEntries);
-    const apolloMacro = createMacroForApollo(timeEntries);
-
-    saveMacro('apollo', apolloMacro);
+    saveMacro('apollo', createMacroForApollo(timeEntries));
+    saveMacro('sportal', createMacroForSPortal(timeEntries));
 
     console.log('Complete');    
 })();
