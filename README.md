@@ -15,6 +15,11 @@ Convert CSV files from time tracking software into UI.Vision RPA JSON macros.
 6. Open the UI.Vision RPA Chrome Extension and paste the JSON macro
 7. Run the Macro to fill in the timesheets automatically
 
+*IMPORTANT*
+Please note that SPortal requires manual interactions:
+1. After the date is inserted, you must click the "Display" button manually
+2. After the time is filled in, you can select "Present" or "Working from remote workplace" in the dropdown, and you must click the "Save" button manually
+
 ## Supported Time Tracking Software
 
 * [Harvest](https://getharvest.com)
