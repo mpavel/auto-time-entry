@@ -1,7 +1,7 @@
 import { convertDecimalTimeToHourString } from "./services";
 import type { Command, Macro, TimeEntry } from "./types";
 
-const PROJECT_OR_TASK = 'Holiday';
+const PROJECT_OR_TASK = 'User relations';
 
 const SELECT_HOUR_MINUTES_COMMAND = {
     Command: "click",

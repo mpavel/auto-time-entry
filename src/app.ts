@@ -26,7 +26,7 @@ const saveMacro = (destination: string, macro: Macro) => {
 }
 
 (async () => {
-    const csvRows = await loadCsv('./time-entries/2020-12.csv');
+    const csvRows = await loadCsv('./time-entries/2021-01.csv');
 
     if (!csvRows) {
         return;
@@ -40,5 +40,5 @@ const saveMacro = (destination: string, macro: Macro) => {
     saveMacro('apollo', createMacroForApollo(timeEntries));
     saveMacro('sportal', createMacroForSPortal(timeEntries));
 
-    console.log('Complete');    
+    console.log('Complete');
 })();

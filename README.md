@@ -4,6 +4,12 @@ TL;DR
 
 Convert CSV files from time tracking software into UI.Vision RPA JSON macros.
 
+You can also use the template provided in `time-entries/template.csv`.
+
+
+## Browser Extension
+[UI.Vision](https://ui.vision/#get) supports Chrome and Firefox.
+
 
 ## How to use
 

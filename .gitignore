@@ -1,6 +1,7 @@
 node_modules
 time-entries/*
 !time-entries/.gitkeep
+!time-entries/template.csv
 macros/*
 !macros/.gitkeep
 .DS_Store
