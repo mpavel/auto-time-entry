@@ -10,6 +10,8 @@ const loadCsv = async (filePath: string): Promise<Array<any> | undefined> => {
     try {
         const csvContent = fs.readFileSync(filePath, 'utf-8');
 
+        console.log(`Completed reading file: ${filePath}`);
+
         return await csv(csvContent);
     } catch (e) {
         console.log('Error:', e.message);
@@ -26,9 +28,10 @@ const saveMacro = (destination: string, macro: Macro) => {
 }
 
 (async () => {
-    const csvRows = await loadCsv('./time-entries/2021-01.csv');
+    const csvRows = await loadCsv('./time-entries/may.csv');
 
     if (!csvRows) {
+        console.log('Could not find any rows in the input file.');
         return;
     }
 

@@ -29,3 +29,6 @@ Please note that SPortal requires manual interactions:
 ## Supported Time Tracking Software
 
 * [Harvest](https://getharvest.com)
+
+## Node Version
+`nvm use 14` - to use Node version 14 in order to run correctly.
