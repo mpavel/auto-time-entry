@@ -28,7 +28,7 @@ const saveMacro = (destination: string, macro: Macro) => {
 }
 
 (async () => {
-    const csvRows = await loadCsv('./time-entries/may.csv');
+    const csvRows = await loadCsv('./time-entries/template.csv');
 
     if (!csvRows) {
         console.log('Could not find any rows in the input file.');
